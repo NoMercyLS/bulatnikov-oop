@@ -39,7 +39,7 @@ int ReplaceString(istream& input, ostream& output, const string& searchString, c
 {
 	string someString;
 	string outputString;
-	int startPos;
+	size_t startPos;
 	while (getline(input, someString))
 	{
 		outputString = "";
