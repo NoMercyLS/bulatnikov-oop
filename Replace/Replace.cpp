@@ -122,12 +122,14 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
+	//	Проверка искомой строки на пустоту
 	if (args->searchString.empty())
 	{
 		cout << "Sought string is empty, please type string" << '\n';
 		return 1;
 	}
 
+	//	Копирование данных из input в output с заменой искомой строки на строку-заменитель
 	if (CopyWithReplace(args) == 1)
 	{
 		return 1;
