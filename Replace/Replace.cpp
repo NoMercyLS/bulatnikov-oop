@@ -70,28 +70,28 @@ int ReplaceString(istream& input, ostream& output, const string& searchString, c
 };
 
 //	Функция копирования с заменой из потока ввода в поток вывода
-int CopyWithReplace(optional<Args> args)
+int CopyWithReplace(const string& inputFileName, const string& outputFileName, const string& searchString, const string& replaceString)
 {
 	//	Инициализация входного потока
 	ifstream inputFile;
-	inputFile.open(args->inputFileName);
+	inputFile.open(inputFileName);
 	if (!inputFile.is_open())
 	{
-		cout << "Failed to open " << args->inputFileName << " for reading\n";
+		cout << "Failed to open " << inputFileName << " for reading\n";
 		return 1;
 	}
 
 	//	Инициализация выходного потока
 	ofstream outputFile;
-	outputFile.open(args->outputFileName);
+	outputFile.open(outputFileName);
 	if (!outputFile.is_open())
 	{
-		cout << "Failed to open " << args->outputFileName << " for writing\n";
+		cout << "Failed to open " << outputFileName << " for writing\n";
 		return 1;
 	}
 
 	//	Замена искомых подстрок в строках файла входного потока с последующим выводом в выходной поток
-	if (ReplaceString(inputFile, outputFile, args->searchString, args->replaceString) != 0)
+	if (ReplaceString(inputFile, outputFile, searchString, replaceString) != 0)
 	{
 		return 1;
 	}
@@ -130,7 +130,7 @@ int main(int argc, char* argv[])
 	}
 
 	//	Копирование данных из input в output с заменой искомой строки на строку-заменитель
-	if (CopyWithReplace(args) == 1)
+	if (CopyWithReplace(args->inputFileName, args->outputFileName, args->searchString, args->replaceString) == 1)
 	{
 		return 1;
 	}
