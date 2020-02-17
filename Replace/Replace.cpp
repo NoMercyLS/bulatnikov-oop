@@ -18,7 +18,7 @@ struct Args
 };
 
 //	Функция получения данных из аргументов командной строки
-optional<Args> getArgs(int argc, char* argv[])
+optional<Args> GetArgs(int argc, char* argv[])
 {
 	if (argc != 5)
 	{
@@ -35,7 +35,7 @@ optional<Args> getArgs(int argc, char* argv[])
 }
 
 //	Функция замены искомой подстроки в исходной строке
-int ReplaceString(ifstream& input, ofstream& output, optional<Args> arguments)
+int ReplaceString(istream& input, ostream& output, const string& searchString, const string& replaceString)
 {
 	string someString;
 	string outputString;
@@ -43,12 +43,12 @@ int ReplaceString(ifstream& input, ofstream& output, optional<Args> arguments)
 	while (getline(input, someString))
 	{
 		outputString = "";
-		while (someString.find(arguments->searchString) != string::npos)
+		while (someString.find(searchString) != string::npos)
 		{
-			startPos = someString.find(arguments->searchString);
+			startPos = someString.find(searchString);
 			outputString += someString.substr(0, startPos);
-			someString.erase(0, startPos + arguments->searchString.size());
-			outputString += arguments->replaceString;
+			someString.erase(0, startPos + searchString.size());
+			outputString += replaceString;
 		}
 		outputString += someString;
 		if (!input.eof())
@@ -69,21 +69,9 @@ int ReplaceString(ifstream& input, ofstream& output, optional<Args> arguments)
 	return 0;
 };
 
-int main(int argc, char* argv[])
+//	Функция копирования с заменой из потока ввода в поток вывода
+int CopyWithReplace(optional<Args> args)
 {
-	//	Получение данных из аргументов командной строки
-	auto args = getArgs(argc, argv);
-	if (args == nullopt)
-	{
-		return 1;
-	}
-
-	if (args->searchString == "")
-	{
-		cout << "Sought string is empty, please type string" << '\n';
-		return 1;
-	}
-
 	//	Инициализация входного потока
 	ifstream inputFile;
 	inputFile.open(args->inputFileName);
@@ -103,7 +91,7 @@ int main(int argc, char* argv[])
 	}
 
 	//	Замена искомых подстрок в строках файла входного потока с последующим выводом в выходной поток
-	if (ReplaceString(inputFile, outputFile, args) != 0)
+	if (ReplaceString(inputFile, outputFile, args->searchString, args->replaceString) != 0)
 	{
 		return 1;
 	}
@@ -122,9 +110,28 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-	//	Закрытие потоков I/O
-	outputFile.close();
-	inputFile.close();
+	return 0;
+}
+
+int main(int argc, char* argv[])
+{
+	//	Получение данных из аргументов командной строки
+	auto args = GetArgs(argc, argv);
+	if (args == nullopt)
+	{
+		return 1;
+	}
+
+	if (args->searchString.empty())
+	{
+		cout << "Sought string is empty, please type string" << '\n';
+		return 1;
+	}
+
+	if (CopyWithReplace(args) == 1)
+	{
+		return 1;
+	}
 
 	return 0;
 }
