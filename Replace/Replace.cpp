@@ -34,43 +34,51 @@ optional<Args> GetArgs(int argc, char* argv[])
 	return args;
 }
 
-//	Функция замены искомой подстроки в исходной строке
-int ReplaceString(istream& input, ostream& output, const string& searchString, const string& replaceString)
+// Функция замены всех включений подстроки во входной строке
+string Replacer(string& inputString, const string& searchString, const string& replaceString)
+{
+	string outputString = "";
+	size_t startPos;
+	while (inputString.find(searchString) != string::npos)
+	{
+		startPos = inputString.find(searchString);
+		outputString += inputString.substr(0, startPos);
+		inputString.erase(0, startPos + searchString.size());
+		outputString += replaceString;
+	}
+	outputString += inputString;
+	return outputString;
+}
+
+//	Функция замены всех включений подстроки в тексте из потока ввода и последующая запись полученного текста в поток вывода
+bool ReplaceString(istream& input, ostream& output, const string& searchString, const string& replaceString)
 {
 	string someString;
 	string outputString;
-	size_t startPos;
 	while (getline(input, someString))
 	{
-		outputString = "";
-		while (someString.find(searchString) != string::npos)
-		{
-			startPos = someString.find(searchString);
-			outputString += someString.substr(0, startPos);
-			someString.erase(0, startPos + searchString.size());
-			outputString += replaceString;
-		}
-		outputString += someString;
+		outputString = Replacer(someString, searchString, replaceString);
+
 		if (!input.eof())
 		{
 			if (!(output << outputString << '\n'))
 			{
-				return 1;
+				return false;
 			}
 		}
 		else
 		{
 			if (!(output << outputString))
 			{
-				return 1;
+				return false;
 			}
 		}
 	}
-	return 0;
+	return true;
 };
 
 //	Функция копирования с заменой из потока ввода в поток вывода
-int CopyWithReplace(const string& inputFileName, const string& outputFileName, const string& searchString, const string& replaceString)
+bool CopyWithReplace(const string& inputFileName, const string& outputFileName, const string& searchString, const string& replaceString)
 {
 	//	Инициализация входного потока
 	ifstream inputFile;
@@ -78,7 +86,7 @@ int CopyWithReplace(const string& inputFileName, const string& outputFileName, c
 	if (!inputFile.is_open())
 	{
 		cout << "Failed to open " << inputFileName << " for reading\n";
-		return 1;
+		return false;
 	}
 
 	//	Инициализация выходного потока
@@ -87,30 +95,30 @@ int CopyWithReplace(const string& inputFileName, const string& outputFileName, c
 	if (!outputFile.is_open())
 	{
 		cout << "Failed to open " << outputFileName << " for writing\n";
-		return 1;
+		return false;
 	}
 
 	//	Замена искомых подстрок в строках файла входного потока с последующим выводом в выходной поток
-	if (ReplaceString(inputFile, outputFile, searchString, replaceString) != 0)
+	if (!ReplaceString(inputFile, outputFile, searchString, replaceString))
 	{
-		return 1;
+		return false;
 	}
 
 	//	Проверка состояния входного потока
 	if (inputFile.bad())
 	{
 		cout << "Failed to read data from input file\n";
-		return 1;
+		return false;
 	}
 
 	//	Проверка состояния выходного потока
 	if (!outputFile.flush())
 	{
 		cout << "Failed to write data to output file\n";
-		return 1;
+		return false;
 	}
 
-	return 0;
+	return true;
 }
 
 int main(int argc, char* argv[])
@@ -130,7 +138,7 @@ int main(int argc, char* argv[])
 	}
 
 	//	Копирование данных из input в output с заменой искомой строки на строку-заменитель
-	if (CopyWithReplace(args->inputFileName, args->outputFileName, args->searchString, args->replaceString) == 1)
+	if (!CopyWithReplace(args->inputFileName, args->outputFileName, args->searchString, args->replaceString))
 	{
 		return 1;
 	}
