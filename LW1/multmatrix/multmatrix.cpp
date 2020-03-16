@@ -21,8 +21,11 @@ optional<Args> GetArgs(int argc, char* argv[])
 {
     if (argc != MAX_ARGUMENTS_COUNT)
     {
-        cout << "Invalid number of arguments\n";
-        cout << "Usage: multmatrix.exe <matrix file1> <matrix file2>\n";
+		ofstream output("output.txt");
+        output << "Invalid number of arguments\n";
+		cout << "Invalid number of arguments\n";
+        output << "Usage: multmatrix.exe <matrix file1> <matrix file2>\n";
+		cout << "Usage: multmatrix.exe <matrix file1> <matrix file2>\n";
         return nullopt;
     }
     Args args;
@@ -45,10 +48,13 @@ void InitMatrix(double Matrix[MATRIX_SIZE][MATRIX_SIZE])
 bool ReadMatrix(double Matrix[MATRIX_SIZE][MATRIX_SIZE], const string& MatrixFilePath)
 {
     ifstream matrixFile;
+	ofstream output;
     matrixFile.open(MatrixFilePath);
+	output.open("output.txt");
     if (!matrixFile.is_open())
     {
         cout << "Failed to open " << MatrixFilePath << " for reading\n";
+		output << "Failed to open " << MatrixFilePath << " for reading\n";
         return false;
     }
 
@@ -58,7 +64,8 @@ bool ReadMatrix(double Matrix[MATRIX_SIZE][MATRIX_SIZE], const string& MatrixFil
         {
             if (!(matrixFile >> Matrix[i][j]))
             {
-                cout << "Incorrect input data from " << MatrixFilePath << " file\n";
+                cout << "Incorrect input data\n";
+				output << "Incorrect input data\n";
                 return false;
             }
         }
@@ -69,6 +76,8 @@ bool ReadMatrix(double Matrix[MATRIX_SIZE][MATRIX_SIZE], const string& MatrixFil
 
 bool PrintMatrix(double Matrix[MATRIX_SIZE][MATRIX_SIZE])
 {
+	ofstream output;
+	output.open("output.txt");
     for (int i = 0; i < MATRIX_SIZE; i++)
     {
         for (int j = 0; j < MATRIX_SIZE; j++)
@@ -76,14 +85,18 @@ bool PrintMatrix(double Matrix[MATRIX_SIZE][MATRIX_SIZE])
             if (!(cout << fixed << setprecision(PRECISION) << Matrix[i][j] << '\t'))
             {
                 cout << "Failed to write data to output stream\n";
+				output << "Failed to write data to output stream\n";
                 return false;
             }
+			output << fixed << setprecision(PRECISION) << Matrix[i][j] << '\t';
         }
         if (!(cout << '\n'))
         {
             cout << "Failed to write data to output stream\n";
+			output << "Failed to write data to output stream\n";
             return false;
         }
+		output << '\n';
     }
 
     return true;
