@@ -36,19 +36,19 @@ string GetTranslate(map<string, string> ::iterator it)
 void SaveChanges(map<string, string> _dictionary)
 {
 	ofstream dictionaryFile;
-	dictionaryFile.open("Dictionary.txt");
+	dictionaryFile.open(DICTIONARY_FILENAME);
 	for (auto item : _dictionary)
 	{
 		dictionaryFile << item.first << '\n' << item.second << '\n';
 	}
 	SetColor(LightCyan);
-	cout << "Изменения сохранены. До свидания.\n";
+	cout << SUCCESSFUL_SAVING_MESSAGE;
 }
 
 void ReadDictionary(map<string, string>& _dictionary)
 {
 	ifstream dictionaryFile;
-	dictionaryFile.open("Dictionary.txt");
+	dictionaryFile.open(DICTIONARY_FILENAME);
 	if (dictionaryFile.is_open())
 	{
 		string word, translate;
@@ -68,7 +68,7 @@ void ReadDictionary(map<string, string>& _dictionary)
 	else
 	{
 		dictionaryFile.close();
-		ofstream createFile("Dictionary.txt");
+		ofstream createFile(DICTIONARY_FILENAME);
 		createFile.close();
 	}
 }
@@ -123,10 +123,10 @@ void RunTranslator(map <string, string>& _dictionary)
 			if (isChanged)
 			{
 				SetColor(LightCyan);
-				cout << "В словарь были внесены изменения. Введите Y или y для сохранения перед выходом.\n";
+				cout << SAVE_ALERT;
 				WaitNewMessage();
 				getline(cin, message);
-				if (LowerCase(message) == "y")
+				if (LowerCase(message) == AGREEMENT_MESSAGE)
 				{
 					SaveChanges(_dictionary);
 					break;
@@ -134,14 +134,14 @@ void RunTranslator(map <string, string>& _dictionary)
 				else
 				{
 					SetColor(LightCyan);
-					cout << "Изменения не сохраненены. До свидания.\n";
+					cout << EXIT_WITHOUT_SAVING_MESSAGE;
 					break;
 				}
 			}
 			else
 			{
 				SetColor(LightCyan);
-				cout << "До свидания!\n";
+				cout << NO_CHANGES_EXIT_MESSAGE;
 				break;
 			}
 		}
