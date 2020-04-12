@@ -21,7 +21,7 @@ string ReplaceEntity(string& htmlCode, const string& charRepresentation, const s
 		entityPos = htmlCode.find(htmlEntity, pos);
 		if (entityPos != string::npos)
 		{
-			result.append(htmlCode, pos, entityPos);
+			result.append(htmlCode, pos, entityPos-pos);
 			pos = entityPos + htmlEntity.size();
 			result.append(charRepresentation);
 		}
