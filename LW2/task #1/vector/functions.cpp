@@ -10,7 +10,6 @@ vector<float> GetVector(istream& stream)
 	vector<float> numbersVect;
 	while (strNumbers >> number)
 	{
-		cout << number << '\n';
 		numbersVect.push_back((float)stod(number));
 	}
 	return numbersVect;
