@@ -14,7 +14,7 @@ const int MIN_PRIME = 2;
 
 const string INVALID_ARGC = "Ivalid arguments count!\nUsage: PrimeNumbers.exe <upperBound>\n";
 const string INVALID_BOUND = "Invalid upper bound! It must be in [1, 100000000]\n";
-
+const string GENERATING_TIME = "Время построения множества простых чисел : ";
 int ParseArguments(int argc, char* argv[]);
 set<int> GeneratePrimeNumbersSet(int upperBound);
 void PrintSet(set<int> numbers);

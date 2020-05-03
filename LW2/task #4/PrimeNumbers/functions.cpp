@@ -8,7 +8,7 @@ int ParseArguments(int argc, char* argv[])
 		return NULL;
 	}
 	int upperBound = atoi(argv[1]);
-	if (upperBound < MIN_BOUND || upperBound < MAX_BOUND)
+	if (upperBound < MIN_BOUND || upperBound > MAX_BOUND)
 	{
 		cout << INVALID_BOUND;
 		return NULL;
@@ -55,12 +55,13 @@ void PrintSet(set<int> numbers)
 		if (count < 9)
 		{
 			cout << item << ' ';
+			count++;
 		}
 		else
 		{
 			cout << item << '\n';
 			count = 0;
 		}
-		
 	}
+	cout << '\n';
 }
