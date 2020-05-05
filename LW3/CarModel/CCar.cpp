@@ -172,13 +172,19 @@ bool CCar::SetSpeed(unsigned int speed)
 	{
 		return false;
 	}
+	if (m_currentSpeed != 0 && speed == 0)
+	{
+		m_currentSpeed = 0;
+		m_movementDirection = 0;
+		return true;
+	}
 	if (speed < 0 && speed > 150)
 	{
 		return false;
 	}
 	if (m_currentGear == -1)
 	{
-		if (speed >= 0 && speed <= 20)
+		if (speed > 0 && speed <= 20)
 		{
 			m_currentSpeed = speed;
 			m_movementDirection = -1;
@@ -188,7 +194,7 @@ bool CCar::SetSpeed(unsigned int speed)
 	}
 	if (m_currentGear == 0)
 	{
-		if (m_currentSpeed < speed)
+		if (m_currentSpeed <= speed)
 		{
 			return false;
 		}
@@ -197,7 +203,7 @@ bool CCar::SetSpeed(unsigned int speed)
 	}
 	if (m_currentGear == 1)
 	{
-		if (speed >= 0 && speed <= 30)
+		if (speed > 0 && speed <= 30)
 		{
 			m_currentSpeed = speed;
 			m_movementDirection = 1;

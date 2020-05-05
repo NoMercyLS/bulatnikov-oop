@@ -42,15 +42,24 @@ bool CCarRemoteControl::SetSpeed(unsigned int speed)
 
 bool CCarRemoteControl::IsInteger(string line)
 {
+	int count = 0;
 	for (auto i : line)
 	{
 		if (!isdigit(i))
 		{
-			if (!(i == '-'))
+			if (count == 0)
+			{
+				if (i != '-')
+				{
+					return false;
+				}
+			}
+			else
 			{
 				return false;
 			}
 		}
+		count++;
 	}
 	return true;
 }
@@ -79,7 +88,6 @@ vector<string> CCarRemoteControl::GetCommand()
 bool CCarRemoteControl::HandleCommand()
 {
 	vector<string> command = GetCommand();
-	/*cout << "DEBUGGING\ncommand[0] == '" << command[0] << "'\ncommand[1]== '" << command[1] << "'\n";*/
 	if (command[0] == "Exit")
 	{
 		exit(0);
@@ -113,7 +121,7 @@ bool CCarRemoteControl::HandleCommand()
 		{
 			if (CCarRemoteControl::SetSpeed(stoul(command[1])))
 			{
-				cout << "Speed was changed to " << command[1] << '\n';
+				cout << "Speed was changed to " << stoi(command[1]) << '\n';
 				return true;
 			}
 			cout << "Speed wasn't changed\n";
@@ -147,7 +155,7 @@ bool CCarRemoteControl::CarAutodrive()
 		cout << ">";
 		if (!HandleCommand())
 		{
-			cout << "Error\n";
+			cout << "Command not executed\n";
 		}
 	}
 	return false;
