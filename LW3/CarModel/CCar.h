@@ -6,11 +6,12 @@ public:
 	CCar();
 
 	~CCar();
-
+  
+	bool CarStatus();
 	bool TurnOnEngine();
 	bool TurnOffEngine();
 	bool SetGear(int gear);
-	bool SetSpeed(int speed);
+	bool SetSpeed(unsigned int speed);
 
 private:
 

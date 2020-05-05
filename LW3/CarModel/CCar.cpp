@@ -1,6 +1,8 @@
 #include "CCar.h"
 #include "Resources.h"
 
+using namespace std;
+
 CCar::CCar()
 	:m_engineStatus(false)
 	,m_movementDirection(0)
@@ -11,6 +13,39 @@ CCar::CCar()
 
 CCar::~CCar()
 {
+}
+
+bool CCar::CarStatus()
+{
+	cout << boolalpha;
+	cout << "Engine status: ";
+	switch (m_engineStatus) {
+	case true: 
+		cout << "On\n";
+		break;
+	case false: 
+		cout << "Off\n";
+		break;
+	}
+	cout << "Movement direction: ";
+	switch (m_movementDirection)
+	{
+	case 0:
+		cout << "Not move\n";
+		break;
+	case 1:
+		cout << "Forward\n";
+		break;
+	case -1:
+		cout << "Backward\n";
+		break;
+	default:
+		cout << "UNKNOWN\n";
+		return false;
+	}
+	cout << "Current speed: " << m_currentSpeed << '\n';
+	cout << "Current gear: " << m_currentGear << '\n';
+	return true;
 }
 
 bool CCar::TurnOnEngine()
@@ -41,6 +76,10 @@ bool CCar::TurnOffEngine()
 
 bool CCar::SetGear(int gear)
 {
+	if (!m_engineStatus)
+	{
+		return false;
+	}
 	if (gear == m_currentGear)
 	{
 		return true;
@@ -73,7 +112,7 @@ bool CCar::SetGear(int gear)
 			m_currentGear = 1;
 			return true;
 		}
-		if (m_movementDirection = 0)
+		if (m_movementDirection == 0)
 		{
 			m_currentGear = 1;
 			return true;
@@ -127,8 +166,12 @@ bool CCar::SetGear(int gear)
 	return false;
 }
 
-bool CCar::SetSpeed(int speed)
+bool CCar::SetSpeed(unsigned int speed)
 {
+	if (!m_engineStatus)
+	{
+		return false;
+	}
 	if (speed < 0 && speed > 150)
 	{
 		return false;
@@ -137,7 +180,7 @@ bool CCar::SetSpeed(int speed)
 	{
 		if (speed >= 0 && speed <= 20)
 		{
-			m_currentSpeed == speed;
+			m_currentSpeed = speed;
 			m_movementDirection = -1;
 			return true;
 		}
@@ -156,7 +199,7 @@ bool CCar::SetSpeed(int speed)
 	{
 		if (speed >= 0 && speed <= 30)
 		{
-			m_currentSpeed == speed;
+			m_currentSpeed = speed;
 			m_movementDirection = 1;
 			return true;
 		}
@@ -166,7 +209,7 @@ bool CCar::SetSpeed(int speed)
 	{
 		if (speed >= 20 && speed <= 50)
 		{
-			m_currentSpeed == speed;
+			m_currentSpeed = speed;
 			m_movementDirection = 1;
 			return true;
 		}
@@ -176,7 +219,7 @@ bool CCar::SetSpeed(int speed)
 	{
 		if (speed >= 30 && speed <= 60)
 		{
-			m_currentSpeed == speed;
+			m_currentSpeed = speed;
 			m_movementDirection = 1;
 			return true;
 		}
@@ -186,7 +229,7 @@ bool CCar::SetSpeed(int speed)
 	{
 		if (speed >= 40 && speed <= 90)
 		{
-			m_currentSpeed == speed;
+			m_currentSpeed = speed;
 			m_movementDirection = 1;
 			return true;
 		}
@@ -196,10 +239,11 @@ bool CCar::SetSpeed(int speed)
 	{
 		if (speed >= 50 && speed <= 150)
 		{
-			m_currentSpeed == speed;
+			m_currentSpeed = speed;
 			m_movementDirection = 1;
 			return true;
 		}
 		return false;
 	}
+	return false;
 }
