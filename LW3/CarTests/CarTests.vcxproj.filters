@@ -15,24 +15,27 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CarModel.cpp">
+    <ClCompile Include="CCarTests.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="CCar.cpp">
+    <ClCompile Include="..\CarModel\CCar.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="CCarRemoteControl.cpp">
+    <ClCompile Include="..\CarModel\CCarRemoteControl.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="CCarRemoteControlTests.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CCar.h">
+    <ClInclude Include="..\CarModel\CCar.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Resources.h">
+    <ClInclude Include="..\CarModel\CCarRemoteControl.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="CCarRemoteControl.h">
+    <ClInclude Include="..\CarModel\Resources.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

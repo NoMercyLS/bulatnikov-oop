@@ -1,13 +1,18 @@
 #pragma once
 #include "Resources.h"
+using namespace std;
 class CCar
 {
 public:
 	CCar();
 
 	~CCar();
-  
-	bool CarStatus();
+	  
+	bool CarStatus(ostream& output);
+	int GetGear();
+	unsigned int GetSpeed();
+	bool GetEngineStatus();
+	int GetMovementDirection();
 	bool TurnOnEngine();
 	bool TurnOffEngine();
 	bool SetGear(int gear);

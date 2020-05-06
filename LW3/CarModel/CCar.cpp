@@ -15,37 +15,56 @@ CCar::~CCar()
 {
 }
 
-bool CCar::CarStatus()
+bool CCar::CarStatus(ostream& output)
 {
-	cout << boolalpha;
-	cout << "Engine status: ";
+	output << "Engine status: ";
 	switch (m_engineStatus) {
 	case true: 
-		cout << "On\n";
+		output << "On\n";
 		break;
 	case false: 
-		cout << "Off\n";
+		output << "Off\n";
 		break;
 	}
-	cout << "Movement direction: ";
+	output << "Movement direction: ";
 	switch (m_movementDirection)
 	{
 	case 0:
-		cout << "Not move\n";
+		output << "Not move\n";
 		break;
 	case 1:
-		cout << "Forward\n";
+		output << "Forward\n";
 		break;
 	case -1:
-		cout << "Backward\n";
+		output << "Backward\n";
 		break;
 	default:
-		cout << "UNKNOWN\n";
+		output << "UNKNOWN\n";
 		return false;
 	}
-	cout << "Current speed: " << m_currentSpeed << '\n';
-	cout << "Current gear: " << m_currentGear << '\n';
+	output << "Current speed: " << m_currentSpeed << '\n';
+	output << "Current gear: " << m_currentGear << '\n';
 	return true;
+}
+
+int CCar::GetGear()
+{
+	return m_currentGear;
+}
+
+unsigned int CCar::GetSpeed()
+{
+	return m_currentSpeed;
+}
+
+bool CCar::GetEngineStatus()
+{
+	return m_engineStatus;
+}
+
+int CCar::GetMovementDirection()
+{
+	return m_movementDirection;
 }
 
 bool CCar::TurnOnEngine()
@@ -65,6 +84,7 @@ bool CCar::TurnOffEngine()
 {
 	if (m_engineStatus && m_currentGear == 0 && m_currentSpeed == 0)
 	{
+		m_movementDirection = 0;
 		m_engineStatus = false;
 		return true;
 	}

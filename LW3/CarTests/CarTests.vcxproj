@@ -20,9 +20,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{DD762805-1921-4B36-ACCF-29D6E199BA36}</ProjectGuid>
+    <ProjectGuid>{CAD0193F-06BB-4A13-A7E2-601ECB174237}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>CarModel</RootNamespace>
+    <RootNamespace>CarTests</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -90,7 +90,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>Default</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -105,7 +104,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>Default</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -122,7 +120,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>Default</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -141,7 +138,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>Default</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -151,15 +147,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CarModel.cpp" />
-    <ClCompile Include="CCar.cpp" />
-    <ClCompile Include="CCarRemoteControl.cpp" />
+    <ClCompile Include="..\CarModel\CCar.cpp" />
+    <ClCompile Include="..\CarModel\CCarRemoteControl.cpp" />
+    <ClCompile Include="CCarRemoteControlTests.cpp" />
+    <ClCompile Include="CCarTests.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CCar.h" />
-    <ClInclude Include="CCarRemoteControl.h" />
-    <ClInclude Include="Resources.h" />
+    <ClInclude Include="..\CarModel\CCar.h" />
+    <ClInclude Include="..\CarModel\CCarRemoteControl.h" />
+    <ClInclude Include="..\CarModel\Resources.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
 </Project>

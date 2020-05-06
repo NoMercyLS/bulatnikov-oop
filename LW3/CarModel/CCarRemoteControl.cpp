@@ -17,7 +17,7 @@ CCarRemoteControl::~CCarRemoteControl()
 
 bool CCarRemoteControl::Info()
 {
-	return m_Car.CarStatus();
+	return m_Car.CarStatus(m_Output);
 }
 
 bool CCarRemoteControl::EngineOn()
@@ -94,14 +94,14 @@ bool CCarRemoteControl::HandleCommand()
 	}
 	if (command[0] == "Info")
 	{
-		cout << "Information: \n";
+		m_Output << "Information:\n";
 		return CCarRemoteControl::Info();
 	}
 	if (command[0] == "EngineOn")
 	{
 		if (CCarRemoteControl::EngineOn())
 		{
-			cout << "Enngine turned on!\n";
+			m_Output << "Engine turned on!\n";
 			return true;
 		}
 		return false;
@@ -110,7 +110,7 @@ bool CCarRemoteControl::HandleCommand()
 	{
 		if (CCarRemoteControl::EngineOff())
 		{
-			cout << "Enngine turned off!\n";
+			m_Output << "Engine turned off!\n";
 			return true;
 		}
 		return false;
@@ -121,10 +121,10 @@ bool CCarRemoteControl::HandleCommand()
 		{
 			if (CCarRemoteControl::SetSpeed(stoul(command[1])))
 			{
-				cout << "Speed was changed to " << stoi(command[1]) << '\n';
+				m_Output << "Speed was changed to " << stoi(command[1]) << '\n';
 				return true;
 			}
-			cout << "Speed wasn't changed\n";
+			m_Output << "Speed wasn't changed\n";
 			return false;
 		}
 		else
@@ -138,10 +138,10 @@ bool CCarRemoteControl::HandleCommand()
 		{
 			if (CCarRemoteControl::SetGear(stoi(command[1])))
 			{
-				cout << "Gear was changed to " << command[1] << '\n';
+				m_Output << "Gear was changed to " << command[1] << '\n';
 				return true;
 			}
-			cout << "Gear wasn't changed\n";
+			m_Output << "Gear wasn't changed\n";
 			return false;
 		}
 	}
@@ -152,10 +152,10 @@ bool CCarRemoteControl::CarAutodrive()
 {
 	while (true)
 	{
-		cout << ">";
+		m_Output << ">";
 		if (!HandleCommand())
 		{
-			cout << "Command not executed\n";
+			m_Output << "Command not executed\n";
 		}
 	}
 	return false;

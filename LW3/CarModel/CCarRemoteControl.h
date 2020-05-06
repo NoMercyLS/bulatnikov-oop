@@ -15,6 +15,7 @@ public:
 	bool EngineOff();
 	bool SetGear(int gear);
 	bool SetSpeed(unsigned int speed);
+	bool HandleCommand();
 private:
 	
 	CCar& m_Car;
@@ -23,6 +24,6 @@ private:
 
 	bool IsInteger(string number);
 	vector<string> GetCommand();
-	bool HandleCommand();
+	
 };
 
