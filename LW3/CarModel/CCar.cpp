@@ -93,6 +93,11 @@ bool CCar::SetGear(int gear)
 		}
 		else
 		{
+			if (m_movementDirection == -1)
+			{
+				m_currentGear = -1;
+				return true;
+			}
 			return false;
 		}
 	}
