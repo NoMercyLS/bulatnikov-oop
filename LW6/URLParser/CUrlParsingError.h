@@ -1,8 +1,9 @@
 #pragma once
 #include "source.h"
-class CUrlParsingError : public invalid_argument
+#include "const.h"
+class CUrlParsingError : public std::invalid_argument
 {
 public:
-	CUrlParsingError(const string& message);
+	CUrlParsingError(const std::string& message);
 };
 

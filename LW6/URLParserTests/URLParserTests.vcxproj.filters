@@ -21,21 +21,12 @@
     <ClCompile Include="..\URLParser\CHttpUrl.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="..\URLParser\CUrlParsingError.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\URLParser\CHttpUrl.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="..\URLParser\const.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="..\URLParser\CUrlParsingError.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

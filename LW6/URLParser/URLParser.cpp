@@ -3,21 +3,21 @@
 
 int main()
 {
-	string urlString;
-	while (!cin.eof() && !cin.fail())
+	std::string urlString;
+	while (!std::cin.eof() && !std::cin.fail())
 	{
-		cout << "Enter URL: ";
-		getline(cin, urlString);
+		std::cout << "Enter URL: ";
+		std::getline(std::cin, urlString);
 		try
 		{
 			CHttpUrl url(urlString);
-			cout << GetInfo(url);
+			std::cout << GetInfo(url);
 		}
-		catch (exception const& e)
+		catch (std::exception const& e)
 		{
-			cout << e.what();
+			std::cout << e.what();
 		}
-		cout << endl;
+		std::cout << std::endl;
 	}
 	return 0;
 }

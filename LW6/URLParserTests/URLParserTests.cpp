@@ -4,7 +4,6 @@
 #include "boost/test/unit_test.hpp"
 #include "../URLParser/CHttpUrl.h"
 #include "../URLParser/CUrlParsingError.h"
-#include "../URLParser/const.h"
 
 void VerifyURL(CHttpUrl url
 	, std::string const& expectedDomain
@@ -92,7 +91,7 @@ BOOST_AUTO_TEST_SUITE(Can_print_info_)
 BOOST_AUTO_TEST_CASE(about_http_url)
 {
 	CHttpUrl url("http://google.com:85/in.html");
-	string expectedString = R"(URL: http://google.com:85/in.html
+	std::string expectedString = R"(URL: http://google.com:85/in.html
 	Protocol: http
 	Domain: google.com
 	Port: 85
@@ -103,7 +102,7 @@ BOOST_AUTO_TEST_CASE(about_http_url)
 BOOST_AUTO_TEST_CASE(about_https_url)
 {
 	CHttpUrl url("https://google.com:85/in.html");
-	string expectedString = R"(URL: https://google.com:85/in.html
+	std::string expectedString = R"(URL: https://google.com:85/in.html
 	Protocol: https
 	Domain: google.com
 	Port: 85
@@ -114,7 +113,7 @@ BOOST_AUTO_TEST_CASE(about_https_url)
 BOOST_AUTO_TEST_CASE(about_url_with_entered_default_port)
 {
 	CHttpUrl url("http://google.com:80/in.html");
-	string expectedString = R"(URL: http://google.com/in.html
+	std::string expectedString = R"(URL: http://google.com/in.html
 	Protocol: http
 	Domain: google.com
 	Port: 80
@@ -125,7 +124,7 @@ BOOST_AUTO_TEST_CASE(about_url_with_entered_default_port)
 BOOST_AUTO_TEST_CASE(about_url_with_default_port)
 {
 	CHttpUrl url("http://google.com/in.html");
-	string expectedString = R"(URL: http://google.com/in.html
+	std::string expectedString = R"(URL: http://google.com/in.html
 	Protocol: http
 	Domain: google.com
 	Port: 80

@@ -1,6 +1,7 @@
 #pragma once
+#include "source.h"
+#include "const.h"
 #include "CUrlParsingError.h"
-
 enum class Protocol
 {
 	HTTP = 85,
@@ -10,39 +11,39 @@ enum class Protocol
 class CHttpUrl
 {
 public:
-	CHttpUrl(string const& url);
+	CHttpUrl(std::string const& url);
 	CHttpUrl(
-		string const& domain,
-		string const& document,
+		std::string const& domain,
+		std::string const& document,
 		Protocol protocol = Protocol::HTTP
 	);
 	CHttpUrl(
-		string const& domain,
-		string const& document,
+		std::string const& domain,
+		std::string const& document,
 		Protocol protocol,
 		unsigned short port
 	);
 
-	string GetUrl()const;
-	string GetDomain()const;
-	string GetDocument()const;
+	std::string GetUrl()const;
+	std::string GetDomain()const;
+	std::string GetDocument()const;
 	Protocol GetProtocol()const;
 	unsigned short GetPort()const;
-	static string ProtocolToString(const Protocol& protocol);
+	static std::string ProtocolToString(const Protocol& protocol);
 private:
-	string m_url;
-	string m_domain;
-	string m_document;
+	std::string m_url;
+	std::string m_domain;
+	std::string m_document;
 	Protocol m_protocol;
 	unsigned short m_port;
 
-	void ParseUrl(const string& url);
-	static string ParseDomain(const string& url);
-	static string ParseDocument(const string& url);
-	static string ParseProtocol(const string& url);
-	static unsigned short ParsePort(const string& url);
-	static Protocol GetProtocolFromLine(const string& line);
+	void ParseUrl(const std::string& url);
+	static std::string ParseDomain(const std::string& url);
+	static std::string ParseDocument(const std::string& url);
+	static std::string ParseProtocol(const std::string& url);
+	static unsigned short ParsePort(const std::string& url);
+	static Protocol GetProtocolFromLine(const std::string& line);
 	static unsigned short GetDefaultPort(Protocol protocol);
 };
 
-string GetInfo(const CHttpUrl& url);
+std::string GetInfo(const CHttpUrl& url);

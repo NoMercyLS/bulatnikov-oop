@@ -1,5 +1,4 @@
 #include "CHttpUrl.h"
-
 using namespace ExceptionMessages;
 CHttpUrl::CHttpUrl(std::string const& url)
 {
@@ -31,7 +30,7 @@ CHttpUrl::CHttpUrl(std::string const& domain, std::string const& document, Proto
 
 std::string CHttpUrl::GetUrl() const
 {
-	string url = ProtocolToString(m_protocol) + "://" + m_domain;
+	std::string url = ProtocolToString(m_protocol) + "://" + m_domain;
 	if (m_port != GetDefaultPort(m_protocol))
 	{
 		url += ":" + std::to_string(m_port);
@@ -63,11 +62,11 @@ void CHttpUrl::ParseUrl(const std::string& url)
 {
 	if (url.empty())
 	{
-		throw invalid_argument(EMPTY_URL);
+		throw std::invalid_argument(EMPTY_URL);
 	}
-	string urlString(url);
+	std::string urlString(url);
 
-	string protocol = ParseProtocol(urlString);
+	std::string protocol = ParseProtocol(urlString);
 	m_protocol = GetProtocolFromLine(protocol);
 
 	size_t position = urlString.find("://") + 3;
@@ -76,7 +75,7 @@ void CHttpUrl::ParseUrl(const std::string& url)
 	urlString = urlString.substr(m_domain.size());
 
 	position = urlString.find(":");
-	if (position != string::npos)
+	if (position != std::string::npos)
 	{
 		m_port = ParsePort(urlString.substr(position));
 		urlString = urlString.substr(std::to_string(m_port).size() + 1);
@@ -92,11 +91,11 @@ void CHttpUrl::ParseUrl(const std::string& url)
 std::string CHttpUrl::ParseProtocol(const std::string& url)
 {
 	size_t endOfProtocol = url.find("://");
-	if (endOfProtocol == string::npos)
+	if (endOfProtocol == std::string::npos)
 	{
-		throw invalid_argument(INVALID_PROTOCOL);
+		throw std::invalid_argument(INVALID_PROTOCOL);
 	}
-	string protocol = boost::to_lower_copy(url.substr(0, endOfProtocol));
+	std::string protocol = boost::to_lower_copy(url.substr(0, endOfProtocol));
 	GetProtocolFromLine(protocol);
 	return protocol;
 }
@@ -104,14 +103,14 @@ std::string CHttpUrl::ParseProtocol(const std::string& url)
 std::string CHttpUrl::ParseDomain(const std::string& url)
 {
 	size_t endOfDomain = url.find(":");
-	if (endOfDomain == string::npos)
+	if (endOfDomain == std::string::npos)
 	{
 		endOfDomain = url.find("/");
 	}
-	string domain = url.substr(0, endOfDomain);
+	std::string domain = url.substr(0, endOfDomain);
 	if (domain == "" || (domain.find(' ') != std::string::npos))
 	{
-		throw invalid_argument(INVALID_DOMAIN);
+		throw std::invalid_argument(INVALID_DOMAIN);
 	}
 	return domain;
 }
@@ -119,7 +118,7 @@ std::string CHttpUrl::ParseDomain(const std::string& url)
 unsigned short CHttpUrl::ParsePort(const std::string& url)
 {
 	size_t endOfPort = url.find("/");
-	string portString = url.substr(1, endOfPort - 1);
+	std::string portString = url.substr(1, endOfPort - 1);
 
 	int port = 0;
 	try
@@ -128,12 +127,12 @@ unsigned short CHttpUrl::ParsePort(const std::string& url)
 	}
 	catch (boost::bad_lexical_cast&)
 	{
-		throw invalid_argument(INVALID_PORT);
+		throw std::invalid_argument(INVALID_PORT);
 	}
 
 	if (port < MIN_PORT_VALUE || port > MAX_PORT_VALUE)
 	{
-		throw invalid_argument(PORT_OUT_OF_RANGE);
+		throw std::invalid_argument(PORT_OUT_OF_RANGE);
 	}
 	unsigned short us_port = (unsigned short)port;
 	return us_port;
@@ -141,10 +140,10 @@ unsigned short CHttpUrl::ParsePort(const std::string& url)
 
 std::string CHttpUrl::ParseDocument(const std::string& url)
 {
-	string document = (url[0] != '/') ? '/' + url : url;
-	if (document.empty() || document.find(' ') != string::npos)
+	std::string document = (url[0] != '/') ? '/' + url : url;
+	if (document.empty() || document.find(' ') != std::string::npos)
 	{
-		throw invalid_argument(INVALID_DOCUMENT);
+		throw std::invalid_argument(INVALID_DOCUMENT);
 	}
 	return document;
 }
@@ -159,7 +158,7 @@ Protocol CHttpUrl::GetProtocolFromLine(const std::string& protocol)
 	{
 		return Protocol::HTTPS;
 	}
-	throw invalid_argument(INVALID_PROTOCOL_TYPE);
+	throw std::invalid_argument(INVALID_PROTOCOL_TYPE);
 }
 
 std::string CHttpUrl::ProtocolToString(const Protocol& protocol)
@@ -174,11 +173,11 @@ unsigned short CHttpUrl::GetDefaultPort(Protocol protocol)
 
 std::string GetInfo(const CHttpUrl& url)
 {
-	ostringstream strm;
-	strm << "URL: " << url.GetUrl() << endl
-		<< "\tProtocol: " << url.ProtocolToString(url.GetProtocol()) << endl
-		<< "\tDomain: " << url.GetDomain() << endl
-		<< "\tPort: " << url.GetPort() << endl
-		<< "\tDocument: " << url.GetDocument() << endl;
+	std::ostringstream strm;
+	strm << "URL: " << url.GetUrl() << std::endl
+		<< "\tProtocol: " << url.ProtocolToString(url.GetProtocol()) << std::endl
+		<< "\tDomain: " << url.GetDomain() << std::endl
+		<< "\tPort: " << url.GetPort() << std::endl
+		<< "\tDocument: " << url.GetDocument() << std::endl;
 	return strm.str();
 }
