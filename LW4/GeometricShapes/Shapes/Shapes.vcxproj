@@ -161,6 +161,7 @@
     <ClInclude Include="CCircle.h" />
     <ClInclude Include="CCommandHandler.h" />
     <ClInclude Include="CLineSegment.h" />
+    <ClInclude Include="constants.h" />
     <ClInclude Include="CPoint.h" />
     <ClInclude Include="CRectangle.h" />
     <ClInclude Include="CTriangle.h" />

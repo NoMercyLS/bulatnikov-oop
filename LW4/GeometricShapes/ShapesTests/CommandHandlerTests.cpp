@@ -145,6 +145,75 @@ SCENARIO("Max area shape")
 	CHECK(output.str() == expected);
 }
 
+SCENARIO("Zero area shapes")
+{
+	SECTION("Circle")
+	{
+		stringstream input, output;
+		CCommandHandler handler = CCommandHandler(input, output);
+		input << "Circle 10 9 0 000000 ffffff";
+		while (!input.eof())
+		{
+			handler.HandleCommand();
+		}
+		handler.GetShapeWithMaxArea();
+		string expected = R"(Shape with max area is Circle:
+	Area = 0.0000
+	Perimeter = 0.0000
+	Outline color = #000000
+	Fill color = #ffffff
+	Center = (10, 9)
+	Radius = 0.0000
+
+)";
+		CHECK(output.str() == expected);
+	}
+	SECTION("Rectangle")
+	{
+		stringstream input, output;
+		CCommandHandler handler = CCommandHandler(input, output);
+		input << "Rectangle 200 100 0 0 000000 ffffff";
+		while (!input.eof())
+		{
+			handler.HandleCommand();
+		}
+		handler.GetShapeWithMaxArea();
+		string expected = R"(Shape with max area is Rectangle:
+	Area = 0.0000
+	Perimeter = 0.0000
+	Outline color = #000000
+	Fill color = #ffffff
+	Top left = (200, 100)
+	Width = 0.0000
+	Height = 0.0000
+
+)";
+		CHECK(output.str() == expected);
+	}
+	SECTION("Triangle")
+	{
+		stringstream input, output;
+		CCommandHandler handler = CCommandHandler(input, output);
+		input << "Triangle 0 0 0 0 0 0 000000 ffffff";
+		while (!input.eof())
+		{
+			handler.HandleCommand();
+		}
+		handler.GetShapeWithMaxArea();
+		string expected = R"(Shape with max area is Triangle:
+	Area = 0.0000
+	Perimeter = 0.0000
+	Outline color = #000000
+	Fill color = #ffffff
+	Vertex1 = (0, 0)
+	Vertex2 = (0, 0)
+	Vertex3 = (0, 0)
+
+)";
+		CHECK(output.str() == expected);
+	}
+}
+
 SCENARIO("Try to find max area and min perimeter shape in empty list")
 {
 	SECTION("Max area")

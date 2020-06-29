@@ -5,6 +5,7 @@
 #include "CTriangle.h"
 #include "CCircle.h"
 #include "CRectangle.h"
+#include "constants.h"
 
 using namespace std::placeholders;
 
@@ -43,7 +44,7 @@ void CCommandHandler::Info() const
 {
 	if (!CheckIfListIsEmpty())
 	{
-		m_output << "All shapes:\n";
+		m_output << ALL_SHAPES_MESSAGE;
 	}
 	for (const auto shape : m_shapesList)
 	{
@@ -53,7 +54,7 @@ void CCommandHandler::Info() const
 
 void CCommandHandler::AddLineSegment(istream& args)
 {
-	uint32_t lineColor = 0x000000;
+	uint32_t lineColor = DEFAULT_OUTLINE_COLOR;
 
 	vector<string> shapeParametrs = ParseArgs(args);
 	CPoint startPoint = { stod(shapeParametrs[1]), stod(shapeParametrs[2]) };
@@ -70,15 +71,14 @@ void CCommandHandler::AddLineSegment(istream& args)
 	}
 	else
 	{
-		m_output << "Failed to create a line segment." << endl
-			<< "Usage: LineSegment <x1> <y1> <x2> <y2> ( <outline color> )" << endl;
+		m_output << FAIL_LINE_CREATE_MESSAGE;
 	}
 }
 
 void CCommandHandler::AddTriangle(istream& args)
 {
-	uint32_t outlineColor = 0x000000;
-	uint32_t fillColor = 0xFFFFFF;
+	uint32_t outlineColor = DEFAULT_OUTLINE_COLOR;
+	uint32_t fillColor = DEFAULT_FILL_COLOR;
 
 	vector<string> shapeParametrs = ParseArgs(args);
 
@@ -102,15 +102,14 @@ void CCommandHandler::AddTriangle(istream& args)
 	}
 	else
 	{
-		m_output << "Failed to create a triangle." << endl
-			<< "Usage: Triangle <x1> <y1> <x2> <y2> <x3> <y3>( <outline color> <fill color> )" << endl;
+		m_output << FAIL_TRIANGLE_CREATE_MESSAGE;
 	}
 }
 
 void CCommandHandler::AddCircle(istream& args)
 {
-	uint32_t outlineColor = 0x000000;
-	uint32_t fillColor = 0xFFFFFF;
+	uint32_t outlineColor = DEFAULT_OUTLINE_COLOR;
+	uint32_t fillColor = DEFAULT_FILL_COLOR;
 
 	vector<string> shapeParametrs = ParseArgs(args);
 
@@ -133,15 +132,14 @@ void CCommandHandler::AddCircle(istream& args)
 	}
 	else
 	{
-		m_output << "Failed to create a circle." << endl
-			<< "Usage: Circle <x> <y> <radius> ( <outline color> <fill color> )" << endl;
+		m_output << FAIL_CIRCLE_CREATE_MESSAGE;
 	}
 }
 
 void CCommandHandler::AddRectangle(istream& args)
 {
-	uint32_t outlineColor = 0x000000;
-	uint32_t fillColor = 0xFFFFFF;
+	uint32_t outlineColor = DEFAULT_OUTLINE_COLOR;
+	uint32_t fillColor = DEFAULT_FILL_COLOR;
 
 	vector<string> shapeParametrs = ParseArgs(args);
 
@@ -165,8 +163,7 @@ void CCommandHandler::AddRectangle(istream& args)
 	}
 	else
 	{
-		m_output << "Failed to create a rectangle." << endl
-			<< "Usage: Rectangle <x> <y> <width> <height> ( <outline color> <fill color> )" << endl;
+		m_output << FAIL_RECTANGLE_CREATE_MESSAGE;
 	}
 }
 
@@ -179,11 +176,11 @@ void CCommandHandler::GetShapeWithMinPerimeter() const
 			{
 				return second->GetPerimeter() > first->GetPerimeter();
 			});
-		m_output << "Shape with min perimeter is " << (*shapeWithMinPerimeter)->ToString() << endl;
+		m_output << SHAPE_MIN_PERIMETER << (*shapeWithMinPerimeter)->ToString() << endl;
 	}
 	else
 	{
-		m_output << "Failed to get the shape with min perimeter. Shapes list is empty." << endl;
+		m_output << MIN_PERIMETER_FAIL;
 	}
 
 }
@@ -197,11 +194,11 @@ void CCommandHandler::GetShapeWithMaxArea() const
 			{
 				return second->GetArea() > first->GetArea();
 			});
-		m_output << "Shape with max area is " << (*shapeWithMaxArea)->ToString() << endl;
+		m_output << SHAPE_MAX_AREA << (*shapeWithMaxArea)->ToString() << endl;
 	}
 	else
 	{
-		m_output << "Failed to get the shape with max area. Shapes list is empty." << endl;
+		m_output << MAX_AREA_FAIL;
 	}
 }
 
